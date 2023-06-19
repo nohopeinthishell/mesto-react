@@ -4,6 +4,7 @@ function Card({ card, onCardClick }) {
   return (
     <li className="places__card">
       <img
+        alt={card.name}
         src={card.link}
         className="places__image"
         onClick={() => onCardClick({ link: card.link, name: card.name })}
