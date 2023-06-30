@@ -26,7 +26,7 @@ class Api {
       },
       body: JSON.stringify({
         name: data.name,
-        about: data.job,
+        about: data.about,
       }),
     }).then((res) => this._getResponseData(res));
   };
@@ -45,7 +45,7 @@ class Api {
     }).then((res) => this._getResponseData(res));
   };
 
-  deleteItem(cardId) {
+  deleteCard(cardId) {
     return fetch(
       `https://mesto.nomoreparties.co/v1/cohort-66/cards/${cardId}`,
       {
@@ -74,28 +74,28 @@ class Api {
     ).then((res) => this._getResponseData(res));
   };
 
-  likeCard = (cardId) => {
-    return fetch(
-      `https://mesto.nomoreparties.co/v1/cohort-66/cards/${cardId}/likes`,
-      {
-        method: "PUT",
-        headers: {
-          authorization: "32035f3b-2c7c-4514-95d9-d73394472392",
-        },
-      }
-    ).then((res) => this._getResponseData(res));
-  };
-
-  deleteLike = (cardId) => {
-    return fetch(
-      `https://mesto.nomoreparties.co/v1/cohort-66/cards/${cardId}/likes`,
-      {
-        method: "DELETE",
-        headers: {
-          authorization: "32035f3b-2c7c-4514-95d9-d73394472392",
-        },
-      }
-    ).then((res) => this._getResponseData(res));
+  changeLikeCardStatus = (cardId, isLiked) => {
+    if (isLiked) {
+      return fetch(
+        `https://mesto.nomoreparties.co/v1/cohort-66/cards/${cardId}/likes`,
+        {
+          method: "DELETE",
+          headers: {
+            authorization: "32035f3b-2c7c-4514-95d9-d73394472392",
+          },
+        }
+      ).then((res) => this._getResponseData(res));
+    } else {
+      return fetch(
+        `https://mesto.nomoreparties.co/v1/cohort-66/cards/${cardId}/likes`,
+        {
+          method: "PUT",
+          headers: {
+            authorization: "32035f3b-2c7c-4514-95d9-d73394472392",
+          },
+        }
+      ).then((res) => this._getResponseData(res));
+    }
   };
 
   getAppInfo() {

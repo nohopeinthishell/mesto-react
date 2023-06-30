@@ -1,6 +1,12 @@
 import React from "react";
 
-function Card({ card, onCardClick }) {
+function Card({ card, onCardClick, profileInfo, onCardLike, onCardDelete }) {
+  const isOwn = card.owner._id === profileInfo._id;
+  const isLiked = card.likes.some((i) => i._id === profileInfo._id);
+  const cardLikeButtonClassName = `places__like-button ${
+    isLiked && "places__like-button_active"
+  }`;
+
   return (
     <li className="places__card">
       <img
@@ -11,14 +17,17 @@ function Card({ card, onCardClick }) {
       />
       <div className="places__items">
         <h2 className="places__text">{card.name}</h2>
-        <div className="places__like">
-          <button className="places__like-button" type="button" />
+        <div className="places__like" onClick={() => onCardLike(card)}>
+          <button className={cardLikeButtonClassName} type="button" />
           <p className="places__like-count">{card.likes.length}</p>
         </div>
-        <button
-          className="places__delete-button places__delete-button_hidden"
-          type="button"
-        />
+        {isOwn && (
+          <button
+            className="places__delete-button"
+            type="button"
+            onClick={() => onCardDelete(card)}
+          />
+        )}
       </div>
     </li>
   );
