@@ -1,6 +1,16 @@
 import React from "react";
+import { usePopupClose } from "../hooks/usePopupClose";
 
-function PopupWithForm({ title, name, children, isOpen, onClose, onSubmit }) {
+function PopupWithForm({
+  title,
+  name,
+  children,
+  isOpen,
+  onSubmit,
+  buttonText,
+  onClose,
+}) {
+  usePopupClose(isOpen, onClose);
   return (
     <div className={`popup popup_${name} ${isOpen ? "popup_opened" : ""}`}>
       <div className="popup__container">
@@ -11,8 +21,7 @@ function PopupWithForm({ title, name, children, isOpen, onClose, onSubmit }) {
         />
         <form
           className={`popup__form popup__form_${name}`}
-          name="form-profile"
-          noValidate=""
+          name={name}
           onSubmit={onSubmit}
         >
           <h2 className="popup__edit-text">{title}</h2>
@@ -21,7 +30,7 @@ function PopupWithForm({ title, name, children, isOpen, onClose, onSubmit }) {
             type="submit"
             className={`popup__submit popup__submit_${name}`}
           >
-            Сохранить
+            {buttonText}
           </button>
         </form>
       </div>
